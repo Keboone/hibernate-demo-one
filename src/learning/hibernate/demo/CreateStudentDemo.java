@@ -1,5 +1,7 @@
 package learning.hibernate.demo;
 
+import java.util.Date;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -25,8 +27,11 @@ public class CreateStudentDemo
 		{
 			// create Student object
 			System.out.println("Creating new Student object");
-			Student tempStudent = new Student("Paul", "Walker", "paulw@gmail.com");
 			
+			String theDateOfBirthStr = "31/12/1998";
+			Date theDateOfBirth = DateUtils.parseDate(theDateOfBirthStr);
+			
+			Student tempStudent = new Student("Paul", "Walker", "paulw@gmail.com", theDateOfBirth);
 			
 			// start transaction
 			session.beginTransaction();
@@ -43,7 +48,12 @@ public class CreateStudentDemo
 			System.out.println("Done");
 			
 		}
-		finally {
+		catch (Exception exc) 
+		{
+			exc.printStackTrace();
+		}
+		finally 
+		{
 			factory.close();
 		}
 		

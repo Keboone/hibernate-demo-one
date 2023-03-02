@@ -1,11 +1,17 @@
 package learning.hibernate.demo.entity;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import learning.hibernate.demo.DateUtils;
 
 
 @Entity
@@ -16,7 +22,6 @@ public class Student
 	 * do uzyskania logow z sqla nalezy dodac biblioteki: logback-classic-1.2.7,
 	 * lockback-core-1.2.7 oraz slf4j-api-1.7.32 oraz odkomentowac plik logback.xml!!
 	 */
-	
 	
 	@Id
 	@GeneratedValue(strategy =GenerationType.IDENTITY)
@@ -33,6 +38,10 @@ public class Student
 	@Column(name="email")
 	private String email;
 	
+	@Column(name="date_of_birth")
+    @Temporal(TemporalType.DATE)    
+    private Date dateOfBirth;
+	
 //	create no args constructor
 	public Student() {}
 	
@@ -43,6 +52,15 @@ public class Student
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
+	}
+	
+	// z data ale duzo jebania z tym
+	public Student(String firstName, String lastName, String email, Date theDateOfBirth) 
+	{
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.dateOfBirth = theDateOfBirth;
 	}
 
 
@@ -70,12 +88,19 @@ public class Student
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	public Date getDateOfBirth() {
+		return dateOfBirth;
+	}
+	public void setDateOfBirth(Date dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
+	}
 
 //	do debugowania nie wymagane
 	
+
 	@Override
 	public String toString() {
-		return "Student [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + "]";
+		return "Student [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + ", dateOfBirth=" + DateUtils.formatDate(dateOfBirth) + "]";
 	}
 	
 
